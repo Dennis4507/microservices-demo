@@ -62,9 +62,9 @@ pipeline {
                         git config user.email "jenkins@cloudcommerce.dev"
                         git config user.name "Jenkins"
 
-                        NEW_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/cloudcommerce"
-                        sed -i "s|  repository:.*|  repository: ${NEW_REPO}|" kubernetes/apps/online-boutique/values.yaml
-                        sed -i "s|  tag:.*|  tag: \\"${IMAGE_TAG}\\"|" kubernetes/apps/online-boutique/values.yaml
+                        NEW_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/cloudcommerce/frontend"
+                        sed -i "s|repository: .* # JENKINS_UPDATES_REPOSITORY|repository: ${NEW_REPO}  # JENKINS_UPDATES_REPOSITORY|" kubernetes/apps/online-boutique/values.yaml
+                        sed -i "s|tag: .* # JENKINS_UPDATES_TAG|tag: \\"${IMAGE_TAG}\\"  # JENKINS_UPDATES_TAG|" kubernetes/apps/online-boutique/values.yaml
 
                         git add kubernetes/apps/online-boutique/values.yaml
                         git commit -m "ci: update frontend image to ${IMAGE_TAG} [skip ci]"
